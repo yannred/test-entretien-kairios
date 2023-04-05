@@ -1,0 +1,21 @@
+name: Lancement des tests
+
+on: [push, pull_request_target, workflow_dispatch]
+
+jobs:
+  tests:
+    strategy:
+      matrix:
+        php-versions: ['7.4']
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Installation des dépendances
+        uses: php-actions/composer@v6
+        with:
+          command: install
+          args: --no-interaction --no-progress --no-suggest
+          php_version: ${{ matrix.php-versions }}
+      - name: Lancement des tests
+        run: php ./vendor/atoum/atoum/bin/atoum --no-code-coverage -d tests/units
