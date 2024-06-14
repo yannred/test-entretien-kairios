@@ -12,7 +12,7 @@ export default {
   },
   actions: {
     async chargerDepots({commit}) {
-      commit('SET_DEPOTS', await api.demande_clinique.depots.all());
+      commit('SET_DEPOTS', await api.demande_clinique.depots.AllNotValidatedReponse());
     },
   },
   getters: {
