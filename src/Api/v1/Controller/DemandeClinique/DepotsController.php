@@ -30,9 +30,12 @@ class DepotsController extends AbstractController
     /**
      * @Route("/depots", name="api_v1_depots_all", methods={"GET"})
      */
-    public function all(): JsonResponse
+    public function all(Request $request): JsonResponse
     {
-        return $this->json($this->depotRepository->findAllByReponseLaPlusRecente());
+        $onlyNotValidateReponse = $request->query->get('onlyNotValidatedReponse', false);
+
+        $all = $this->depotRepository->findAllByReponseLaPlusRecente($onlyNotValidateReponse);
+        return $this->json($all);
     }
 
     /**
@@ -46,4 +49,22 @@ class DepotsController extends AbstractController
 
         return $this->json([], Response::HTTP_CREATED);
     }
+
+
+    /**
+     * @Route("/reponses/valider", name="api_v1_depots_valider_reponse", methods={"POST"})
+     */
+    public function validerReponse(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        foreach ($data['ids'] as $id) {
+            $this->reponseManager->valider($id, $data['reason']);
+        }
+
+        return $this->json([], Response::HTTP_OK);
+    }
+
+
+
 }

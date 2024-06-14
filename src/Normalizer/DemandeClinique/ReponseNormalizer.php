@@ -16,6 +16,7 @@ class ReponseNormalizer implements NormalizerInterface
             'description' => $object->getDescription(),
             'depot' => $object->getDepot()->getId(),
             'type' => $object->getType(),
+            'validate' => $object->isValidate(),
         ];
     }
 

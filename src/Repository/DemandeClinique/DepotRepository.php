@@ -5,6 +5,7 @@ namespace App\Repository\DemandeClinique;
 use App\Entity\DemandeClinique\Depot;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr;
 
 /**
  * @extends ServiceEntityRepository<Depot>
@@ -21,14 +22,24 @@ class DepotRepository extends ServiceEntityRepository
         parent::__construct($registry, Depot::class);
     }
 
-    public function findAllByReponseLaPlusRecente(): array
+    /**
+     * Return all Depots with Reponse ordered by Reponse dateCreation
+     * @param bool $onlyNotValidateReponse Don't return validated Reponse
+     * @return array
+     */
+    public function findAllByReponseLaPlusRecente(bool $onlyNotValidateReponse = false): array
     {
-        return $this->createQueryBuilder('d')
-            ->leftJoin('d.reponses', 'r')
-            ->addSelect('r')
-            ->orderBy('r.dateCreation', 'DESC')
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('d');
+
+        if ($onlyNotValidateReponse) {
+            $qb->leftJoin('d.reponses', 'r', Expr\Join::WITH, 'r.validate = false');
+        } else {
+            $qb->leftJoin('d.reponses', 'r');
+        }
+
+        $qb->addSelect('r')
+            ->orderBy('r.dateCreation', 'DESC');
+
+        return $qb->getQuery()->getResult();
     }
 }
