@@ -2,7 +2,7 @@
   <div v-if="ids">
 
     <div class="mb-2">
-      <h1 class="text-4xl font-bold">Validation des réponses {{ ids }}</h1>
+      <h1 class="text-4xl font-bold">Validation réponse(s) {{ ids }}</h1>
     </div>
 
       <form class="flex flex-col gap-2" @submit.prevent="validate">
@@ -41,12 +41,10 @@ export default {
 
       try {
         this.loading = true;
-
         const data = JSON.stringify({
           "ids": this.$route.query.ids.split('-'),
           "reason": this.reason,
         });
-
         await api.demande_clinique.reponses.valider(data);
         await this.chargerDepots();
         this.$router.push('/');

@@ -7,14 +7,11 @@ namespace DoctrineMigrations;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\Migrations\AbstractMigration;
 
-/**
- * Auto-generated Migration: Please modify to your needs!
- */
 final class Version20240614095422 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Add validate and validation_reason columns to demande_clinique_reponses table';
     }
 
     public function up(Schema $schema): void

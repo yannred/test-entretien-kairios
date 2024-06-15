@@ -10,10 +10,6 @@ body {
     @apply w-4 text-blue-600 bg-gray-100 border-gray-300 rounded
 }
 
-.checkboxes:focus {
-    @apply ring-2 ring-blue-500
-}
-
 button.enabled {
     @apply cursor-pointer
 }

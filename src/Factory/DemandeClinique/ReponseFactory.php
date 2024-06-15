@@ -7,7 +7,7 @@ use App\Entity\DemandeClinique\Reponse;
 
 class ReponseFactory
 {
-    public function creer(Depot $depot, string $titre, string $description, int $type, bool $validate): Reponse
+    public function creer(Depot $depot, string $titre, string $description, int $type, bool $validate = false): Reponse
     {
         return (new Reponse())
             ->setTitre($titre)

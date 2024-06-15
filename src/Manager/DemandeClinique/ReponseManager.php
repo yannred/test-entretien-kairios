@@ -39,10 +39,8 @@ class ReponseManager
     }
 
 
-    public function valider(int $id, string $reason): Reponse
+    public function valider(Reponse $reponse, string $reason): Reponse
     {
-        $reponse = $this->entityManagerInterface->getRepository(Reponse::class)->find($id);
-
         $reponse->setValidate(true);
         $reponse->setValidationReason($reason);
 
