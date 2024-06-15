@@ -2,6 +2,7 @@
 
 namespace App\Manager\DemandeClinique\tests\units;
 
+use App\Enum\DemandeClinique\Reponse\Type;
 use atoum\atoum;
 
 class ReponseManager extends atoum\test
@@ -20,6 +21,26 @@ class ReponseManager extends atoum\test
         $this->reponseValidator->getMockController()->valider = null;
     }
 
+
+    public function testValider()
+    {
+        $this
+            ->assert('Test de validation OK')
+            ->given(
+                $reponse = $this->getReponse(),
+                $reason = 'rainson'
+            )
+            ->if(
+                $reponseManager = $this->getTestedInstance()
+            )
+            ->then
+                ->object($reponseManager->valider($reponse, $reason))
+                    ->isInstanceOf(\App\Entity\DemandeClinique\Reponse::class)
+                    ->boolean($reponse->isValidate())
+                        ->isTrue()
+        ;
+    }
+
     public function testCreerOk()
     {
         $this
@@ -28,7 +49,7 @@ class ReponseManager extends atoum\test
                 $depot = $this->getDepot(),
                 $titre = 'titre',
                 $description = 'description',
-                $type = 1
+                $type = Type::PRIORITAIRE
             )
             ->if(
                 $reponseManager = $this->getTestedInstance()

@@ -14,13 +14,14 @@ class ReponseFactory extends atoum\test
                 $depot = $this->getDepot(),
                 $titre = 'titre',
                 $description = 'description',
-                $type = 1
+                $type = 1,
+                $validate = false
             )
             ->if(
                 $reponseFactory = $this->getTestedInstance()
             )
             ->then
-                ->object($reponseFactory->creer($depot, $titre, $description, $type))
+                ->object($reponseFactory->creer($depot, $titre, $description, $type, $validate))
                     ->isInstanceOf(\App\Entity\DemandeClinique\Reponse::class)
         ;
     }

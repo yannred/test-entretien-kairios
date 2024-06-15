@@ -25,6 +25,7 @@ class ReponseNormalizer extends atoum\test
                         'description' => 'description',
                         'type' => 1,
                         'depot' => 1,
+                        'validate' => false,
                     ])
         ;
     }
